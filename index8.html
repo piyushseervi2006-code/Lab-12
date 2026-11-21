@@ -1,0 +1,1013 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Cart | Online Shopping</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f6f3ed;
+    color: #20384c;
+}
+
+header {
+    background: #20384c;
+    color: white;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #70b8e5;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+nav a:hover {
+    color: #85c8ed;
+}
+
+#cartCount {
+    background: #d9534f;
+    border-radius: 50%;
+    padding: 4px 8px;
+}
+
+.page {
+    display: none;
+    min-height: 75vh;
+    padding: 35px 5%;
+}
+
+.page.active {
+    display: block;
+}
+
+.container {
+    max-width: 1250px;
+    margin: 30px auto;
+}
+
+.hero {
+    max-width: 1250px;
+    margin: 10px auto 55px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #e9e4da;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hero-content {
+    padding: 65px 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: 55px;
+    line-height: 1.1;
+    margin: 20px 0;
+}
+
+.hero p {
+    color: #64717b;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    min-height: 390px;
+    object-fit: cover;
+}
+
+.eyebrow {
+    color: #9b704d;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+button, .btn {
+    background: #20384c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 13px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background: #365c78;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-family: Georgia, serif;
+    margin: 12px 0;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.product-card {
+    background: white;
+    border: 1px solid #e4dfd6;
+    border-radius: 7px;
+    padding: 13px;
+    transition: 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 15px #00000015;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.category {
+    color: #9b704d;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
+.product-card h3 {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    min-height: 43px;
+    margin: 10px 0;
+}
+
+.price {
+    color: #27824f;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.details-btn {
+    background: #e9e4da;
+    color: #20384c;
+    margin-right: 5px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.category-card {
+    padding: 25px;
+    background: white;
+    border: 1px solid #e4dfd6;
+    border-radius: 6px;
+}
+
+.category-card h3 {
+    margin: 10px 0;
+}
+
+.story {
+    background: #e9e4da;
+    padding: 40px;
+    margin-top: 45px;
+    line-height: 1.8;
+    border-radius: 7px;
+}
+
+.form-container {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 35px;
+    background: white;
+    border: 1px solid #e4dfd6;
+    border-radius: 7px;
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+label {
+    display: block;
+    margin: 16px 0 8px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d4d8da;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+form button {
+    margin-top: 20px;
+}
+
+.cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-row img {
+    width: 90px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cart-row input {
+    width: 75px;
+}
+
+.remove-btn {
+    background: #c64d43;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-top: 25px;
+    line-height: 2.5;
+}
+
+.product-detail-img {
+    width: 100%;
+    max-width: 450px;
+    height: 330px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+footer {
+    background: #20384c;
+    color: white;
+    padding: 35px;
+    text-align: center;
+    line-height: 2;
+}
+
+footer span {
+    color: #70b8e5;
+}
+
+.message {
+    margin-top: 15px;
+    color: #27824f;
+    font-weight: bold;
+}
+
+@media(max-width: 900px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .product-grid,
+    .category-grid,
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Business<span>Cart.</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Shop</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">Our Story</a>
+        <a href="#contact">Contact</a>
+        <a href="#account">Account</a>
+        <a href="#cart">Bag <span id="cartCount">0</span></a>
+    </nav>
+</header>
+
+<main>
+
+<!-- HOME PAGE -->
+<section id="home" class="page">
+
+    <div class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">THE EVERYDAY COLLECTION</p>
+
+            <h1>Good things.<br>Chosen well.</h1>
+
+            <p>
+                Discover thoughtfully selected technology and
+                workspace essentials that make everyday life better.
+            </p>
+
+            <a href="#products" class="btn">Shop the Collection →</a>
+        </div>
+
+        <img
+        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000"
+        alt="Modern workspace">
+    </div>
+
+    <div class="container">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">OUR SELECTION</p>
+                <h2>Selected Products</h2>
+            </div>
+            <a href="#products">View all products →</a>
+        </div>
+
+        <div id="featuredList" class="product-grid"></div>
+    </div>
+
+    <div id="categories" class="container">
+        <p class="eyebrow">EXPLORE</p>
+        <h2>Shop by Category</h2>
+
+        <div class="category-grid">
+            <div class="category-card">
+                <h3>⌨ Peripherals</h3>
+                <p>Keyboards and mice for everyday use.</p>
+            </div>
+
+            <div class="category-card">
+                <h3>🎧 Audio</h3>
+                <p>Headphones and audio accessories.</p>
+            </div>
+
+            <div class="category-card">
+                <h3>💡 Lighting</h3>
+                <p>Lighting for better workspaces.</p>
+            </div>
+
+            <div class="category-card">
+                <h3>💻 Laptop Accessories</h3>
+                <p>Stands and desk essentials.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="story container">
+        <p class="eyebrow">OUR STORY</p>
+        <h2>Why we started</h2>
+        <p>
+            Business Cart was created to make useful everyday products
+            easier to discover. We believe shopping should be simple,
+            affordable and enjoyable. Our collection focuses on practical
+            technology, workspace accessories and everyday essentials.
+        </p>
+    </div>
+</section>
+
+
+<!-- PRODUCTS PAGE -->
+<section id="products" class="page">
+    <div class="container">
+        <p class="eyebrow">THE COLLECTION</p>
+        <h1>All Products</h1>
+        <p>Explore our carefully selected collection.</p>
+
+        <br>
+
+        <div id="productList" class="product-grid">
+            Loading products...
+        </div>
+    </div>
+</section>
+
+
+<!-- PRODUCT DETAILS PAGE -->
+<section id="details" class="page">
+    <div class="container" id="productDetails"></div>
+</section>
+
+
+<!-- CART PAGE -->
+<section id="cart" class="page">
+    <div class="container">
+        <p class="eyebrow">YOUR SELECTION</p>
+        <h1>Shopping Bag</h1>
+
+        <div id="cartItems"></div>
+
+        <div class="cart-summary">
+            <h2 id="cartTotal">Total: ₹0</h2>
+            <a href="#products" class="btn">Continue Shopping</a>
+            <a href="#checkout" class="btn">Proceed to Checkout →</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- CHECKOUT PAGE -->
+<section id="checkout" class="page">
+    <div class="form-container">
+        <p class="eyebrow">ALMOST THERE</p>
+        <h1>Checkout</h1>
+
+        <form id="checkoutForm">
+
+            <label>Full Name</label>
+            <input type="text" required>
+
+            <label>Email</label>
+            <input type="email" required>
+
+            <label>Mobile Number</label>
+            <input type="tel" pattern="[0-9]{10}" required>
+
+            <label>Delivery Address</label>
+            <textarea required></textarea>
+
+            <label>Payment Method</label>
+            <select required>
+                <option value="">Select Payment</option>
+                <option>Cash on Delivery</option>
+                <option>UPI (Demo)</option>
+                <option>Card (Demo)</option>
+            </select>
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <div id="orderMessage" class="message"></div>
+    </div>
+</section>
+
+
+<!-- LOGIN AND REGISTER PAGE -->
+<section id="account" class="page">
+
+    <div class="account-grid">
+
+        <div class="form-container">
+            <p class="eyebrow">WELCOME BACK</p>
+            <h1>Login</h1>
+
+            <form id="loginForm">
+                <label>Email</label>
+                <input type="email" id="loginEmail" required>
+
+                <label>Password</label>
+                <input type="password" id="loginPassword" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p id="loginMessage" class="message"></p>
+        </div>
+
+        <div class="form-container">
+            <p class="eyebrow">JOIN US</p>
+            <h1>Create Account</h1>
+
+            <form id="registerForm">
+                <label>Full Name</label>
+                <input type="text" id="regName" required>
+
+                <label>Email</label>
+                <input type="email" id="regEmail" required>
+
+                <label>Password</label>
+                <input type="password" id="regPassword"
+                       minlength="6" required>
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p id="registerMessage" class="message"></p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- CONTACT PAGE -->
+<section id="contact" class="page">
+
+    <div class="account-grid">
+
+        <div class="form-container">
+            <p class="eyebrow">GET IN TOUCH</p>
+            <h1>Contact Us</h1>
+
+            <p>Email: support@businesscart.com</p>
+            <br>
+            <p>Phone: +91 9876543210</p>
+            <br>
+            <p>Location: Bengaluru, Karnataka, India</p>
+        </div>
+
+        <div class="form-container">
+            <h2>Send us a message</h2>
+
+            <form id="contactForm">
+                <label>Your Name</label>
+                <input type="text" required>
+
+                <label>Email</label>
+                <input type="email" required>
+
+                <label>Message</label>
+                <textarea required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+            <p id="contactMessage" class="message"></p>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+
+<footer>
+    <h2>Business<span>Cart.</span></h2>
+    <p>Thoughtful products for everyday living.</p>
+    <p>© 2026 Business Cart. All rights reserved.</p>
+</footer>
+
+
+<!-- XML PRODUCT DATABASE EMBEDDED IN HTML -->
+<script type="text/xml" id="productXML">
+<products>
+
+    <product>
+        <id>1</id>
+        <name>Craft Mechanical Keyboard</name>
+        <category>Peripherals</category>
+        <price>2499</price>
+        <image>https://images.unsplash.com/photo-1595225476474-87563907a212?w=700</image>
+        <description>A premium mechanical keyboard designed for comfortable typing, productivity and gaming.</description>
+    </product>
+
+    <product>
+        <id>2</id>
+        <name>Arc Wireless Mouse</name>
+        <category>Peripherals</category>
+        <price>1299</price>
+        <image>https://images.unsplash.com/photo-1527814050087-3793815479db?w=700</image>
+        <description>Ergonomic wireless mouse with precise tracking and a comfortable grip.</description>
+    </product>
+
+    <product>
+        <id>3</id>
+        <name>Studio Headphones</name>
+        <category>Audio</category>
+        <price>2999</price>
+        <image>https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700</image>
+        <description>Comfortable over-ear headphones with detailed sound for music and work.</description>
+    </product>
+
+    <product>
+        <id>4</id>
+        <name>Minimal Desk Lamp</name>
+        <category>Lighting</category>
+        <price>1599</price>
+        <image>https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=700</image>
+        <description>A stylish desk lamp for a comfortable and well-lit workspace.</description>
+    </product>
+
+    <product>
+        <id>5</id>
+        <name>Laptop Stand</name>
+        <category>Laptop Accessories</category>
+        <price>899</price>
+        <image>https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=700</image>
+        <description>Compact laptop stand designed to improve desk organisation.</description>
+    </product>
+
+    <product>
+        <id>6</id>
+        <name>Desk Organiser</name>
+        <category>Desk Accessories</category>
+        <price>699</price>
+        <image>https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=700</image>
+        <description>Keep stationery and everyday desk essentials organised.</description>
+    </product>
+
+</products>
+</script>
+
+
+<!-- JAVASCRIPT -->
+<script>
+
+// LOAD XML DATA
+let xmlText = document.getElementById("productXML").textContent;
+let xml = new DOMParser().parseFromString(xmlText, "application/xml");
+
+let products = Array.from(xml.querySelectorAll("product")).map(p => ({
+    id: p.querySelector("id").textContent,
+    name: p.querySelector("name").textContent,
+    category: p.querySelector("category").textContent,
+    price: Number(p.querySelector("price").textContent),
+    image: p.querySelector("image").textContent,
+    description: p.querySelector("description").textContent
+}));
+
+let cart = JSON.parse(localStorage.getItem("bcCart")) || [];
+
+
+// ESCAPE TEXT
+function safe(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+
+// NAVIGATION
+function showPage() {
+    let page = location.hash.substring(1) || "home";
+
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
+
+    let selected = document.getElementById(page);
+
+    if (selected) {
+        selected.classList.add("active");
+    } else {
+        document.getElementById("home").classList.add("active");
+    }
+
+    if (page === "cart") displayCart();
+
+    window.scrollTo(0, 0);
+}
+
+window.addEventListener("hashchange", showPage);
+
+
+// PRODUCT CARD
+function productCard(p) {
+    return `
+    <div class="product-card">
+
+        <img src="${safe(p.image)}" alt="${safe(p.name)}">
+
+        <p class="category">${safe(p.category)}</p>
+
+        <h3>${safe(p.name)}</h3>
+
+        <p class="price">₹${p.price.toLocaleString("en-IN")}</p>
+
+        <button class="details-btn"
+        onclick="viewDetails('${p.id}')">Details</button>
+
+        <button onclick="addToCart('${p.id}')">
+        Add to Cart</button>
+
+    </div>`;
+}
+
+
+// DISPLAY PRODUCTS
+function displayProducts() {
+    document.getElementById("productList").innerHTML =
+        products.map(productCard).join("");
+
+    document.getElementById("featuredList").innerHTML =
+        products.slice(0, 4).map(productCard).join("");
+}
+
+
+// PRODUCT DETAILS
+function viewDetails(id) {
+    let p = products.find(x => x.id === id);
+
+    if (!p) return;
+
+    document.getElementById("productDetails").innerHTML = `
+        <p class="eyebrow">PRODUCT INFORMATION</p>
+
+        <img class="product-detail-img"
+             src="${safe(p.image)}" alt="${safe(p.name)}">
+
+        <p class="category">${safe(p.category)}</p>
+
+        <h1>${safe(p.name)}</h1>
+
+        <p class="price">₹${p.price.toLocaleString("en-IN")}</p>
+
+        <p>${safe(p.description)}</p>
+
+        <br>
+
+        <button onclick="addToCart('${p.id}')">
+            Add to Cart
+        </button>
+
+        <a href="#products" class="btn">Back to Shop</a>
+    `;
+
+    location.hash = "details";
+}
+
+
+// SAVE CART
+function saveCart() {
+    localStorage.setItem("bcCart", JSON.stringify(cart));
+
+    document.getElementById("cartCount").textContent =
+        cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+
+// ADD TO CART
+function addToCart(id) {
+    let p = products.find(x => x.id === id);
+
+    if (!p) return;
+
+    let existing = cart.find(x => x.id === id);
+
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({
+            id: p.id,
+            name: p.name,
+            price: p.price,
+            image: p.image,
+            quantity: 1
+        });
+    }
+
+    saveCart();
+    alert(p.name + " added to your cart!");
+}
+
+
+// DISPLAY CART
+function displayCart() {
+    let area = document.getElementById("cartItems");
+    let total = 0;
+
+    if (cart.length === 0) {
+        area.innerHTML = "<p>Your shopping bag is empty.</p>";
+    } else {
+        area.innerHTML = cart.map(item => {
+            let subtotal = item.price * item.quantity;
+            total += subtotal;
+
+            return `
+            <div class="cart-row">
+
+                <img src="${safe(item.image)}" alt="">
+
+                <div>
+                    <strong>${safe(item.name)}</strong>
+                    <p>₹${item.price.toLocaleString("en-IN")}</p>
+                </div>
+
+                <input type="number" min="1"
+                    value="${item.quantity}"
+                    onchange="updateQuantity('${item.id}',this.value)">
+
+                <strong>₹${subtotal.toLocaleString("en-IN")}</strong>
+
+                <button class="remove-btn"
+                    onclick="removeItem('${item.id}')">
+                    Remove
+                </button>
+
+            </div>`;
+        }).join("");
+    }
+
+    document.getElementById("cartTotal").textContent =
+        "Total: ₹" + total.toLocaleString("en-IN");
+}
+
+
+// UPDATE QUANTITY
+function updateQuantity(id, value) {
+    let item = cart.find(x => x.id === id);
+
+    if (!item) return;
+
+    item.quantity = Math.max(1, parseInt(value) || 1);
+
+    saveCart();
+    displayCart();
+}
+
+
+// REMOVE ITEM
+function removeItem(id) {
+    cart = cart.filter(x => x.id !== id);
+
+    saveCart();
+    displayCart();
+}
+
+
+// REGISTER
+document.getElementById("registerForm").addEventListener(
+"submit", function(e) {
+
+    e.preventDefault();
+
+    let name = document.getElementById("regName").value.trim();
+    let email = document.getElementById("regEmail").value.trim();
+    let password = document.getElementById("regPassword").value;
+
+    let users = JSON.parse(localStorage.getItem("bcUsers")) || [];
+
+    if (users.some(u => u.email === email)) {
+        document.getElementById("registerMessage").textContent =
+            "Email already registered.";
+        return;
+    }
+
+    users.push({name, email, password});
+
+    localStorage.setItem("bcUsers", JSON.stringify(users));
+
+    document.getElementById("registerMessage").textContent =
+        "Registration successful! Please login.";
+
+    this.reset();
+});
+
+
+// LOGIN
+document.getElementById("loginForm").addEventListener(
+"submit", function(e) {
+
+    e.preventDefault();
+
+    let email = document.getElementById("loginEmail").value.trim();
+    let password = document.getElementById("loginPassword").value;
+
+    let users = JSON.parse(localStorage.getItem("bcUsers")) || [];
+
+    let user = users.find(u =>
+        u.email === email && u.password === password
+    );
+
+    document.getElementById("loginMessage").textContent = user
+        ? "Welcome " + user.name + "! Login successful."
+        : "Invalid email or password.";
+
+    this.reset();
+});
+
+
+// CHECKOUT
+document.getElementById("checkoutForm").addEventListener(
+"submit", function(e) {
+
+    e.preventDefault();
+
+    if (cart.length === 0) {
+        document.getElementById("orderMessage").textContent =
+            "Your cart is empty. Please add products first.";
+        return;
+    }
+
+    let orderNumber = Math.floor(100000 + Math.random() * 900000);
+
+    document.getElementById("orderMessage").innerHTML =
+        "<h2>Order placed successfully!</h2>" +
+        "<p>Order Number: " + orderNumber + "</p>";
+
+    cart = [];
+
+    saveCart();
+    displayCart();
+
+    this.reset();
+});
+
+
+// CONTACT FORM
+document.getElementById("contactForm").addEventListener(
+"submit", function(e) {
+
+    e.preventDefault();
+
+    document.getElementById("contactMessage").textContent =
+        "Thank you! Your message has been submitted.";
+
+    this.reset();
+});
+
+
+// START WEBSITE
+function initialize() {
+    saveCart();
+    displayProducts();
+    showPage();
+}
+
+initialize();
+
+</script>
+
+</body>
+</html>
